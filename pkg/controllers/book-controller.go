@@ -5,9 +5,6 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-
-	"github.com/Priyanka-77/Priyanka-77/go-bookstore-mysql/pkg/models"
-	"github.com/Priyanka-77/Priyanka-77/go-bookstore-mysql/pkg/utils"
 	"github.com/Priyanka-77/go-bookstore-mysql/pkg/models"
 	"github.com/Priyanka-77/go-bookstore-mysql/pkg/utils"
 	"github.com/gorilla/mux"
@@ -72,16 +69,16 @@ func UpdateBook(w http.ResponseWriter, r *http.Request){
 		fmt.Println("Error while parsing")
 	}
 
-	bookDetails, _ := models.GetBookById(ID)
+	bookDetails, db := models.GetBookById(ID)
 
 	if updateBook.Name != "" {
-		bookDetails.Name == updateBook.Name
+		bookDetails.Name = updateBook.Name
 	}
 	if updateBook.Author != "" {
-		bookDetails.Author == updateBook.Author
+		bookDetails.Author = updateBook.Author
 	}
 	if updateBook.Publication != "" {
-		bookDetails.Publication == updateBook.Publication
+		bookDetails.Publication = updateBook.Publication
 	}
 	db.Save(&bookDetails)
 	res, _ := json.Marshal(bookDetails)
